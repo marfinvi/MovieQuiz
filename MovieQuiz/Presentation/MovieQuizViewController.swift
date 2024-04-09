@@ -60,27 +60,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     // приватный метод вывода на экран вопроса, который принимает на вход вью модель вопроса и ничего не возвращает
     private func show(quiz result: QuizResultsViewModel) {
-        /*
-        let alert = UIAlertController(
-            title: result.title,
-            message: result.text,
-            preferredStyle: .alert)
-        
-        let action = UIAlertAction(
-            title: result.buttonText,
-            style: .default) { [weak self] _ in
-                guard let self = self else { return } // разворачиваем слабую ссылку
-                self.currentQuestionIndex = 0
-                // сбрасываем переменную с количеством правильных ответов
-                self.correctAnswers = 0
-                
-                // заново показываем первый вопрос
-                questionFactory?.requestNextQuestion()
-            }
-        
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
-         */
+  
         let alertModel = AlertModel(
              title: result.title,
              message: result.text,
@@ -121,21 +101,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
-/*           let text = correctAnswers == questionsAmount ?
-                        "Поздравляем, вы ответили на 10 из 10!" :
-                        "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
-            let viewModel = QuizResultsViewModel( // 2
-                title: "Этот раунд окончен!",
-                text: text,
-                buttonText: "Сыграть ещё раз")
- 
 
-            let quizResultsViewModel = QuizResultsViewModel(
-                title: "Этот раунд окончен!",
-                text: text,
-                buttonText: "Сыграть еще раз")
-            show(quiz: quizResultsViewModel)
-*/
             statisticService?.store(correct: correctAnswers, total: questionsAmount)
                         
             let statistics = statisticService!
