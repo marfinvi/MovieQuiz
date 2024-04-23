@@ -8,21 +8,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     @IBOutlet private weak var yesButton: UIButton!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
-    // Описание модели отображения элементов 
-    /*
-    private struct ViewModel {
-        let image: UIImage
-        let question: String
-        let questionNumber: String
-    }
-    */
-    //private var currentQuestionIndex = 0
-    //private var correctAnswers = 0
-    //private let questionsAmount: Int = 10
-    
-    //private var questionFactory: QuestionFactoryProtocol?
     private var alertPresenter: AlertPresenter?
-    //private var statisticService: StatisticService?
     private var presenter: MovieQuizPresenter?
 
 
@@ -66,16 +52,6 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         imageView.layer.borderWidth = 8
     }
 
-    /*
-    func didFailToLoadData(with error: Error) {
-        showNetworkError(message: error.localizedDescription) // возьмём в качестве сообщения описание ошибки
-    }
-    
-    func didLoadDataFromServer() {
-        activityIndicator.isHidden = true // скрываем индикатор загрузки
-        questionFactory?.requestNextQuestion()
-    }
-    */
     // MARK: - Private functions
     
     func showLoadingIndicator() {
@@ -104,15 +80,6 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         alertPresenter?.show(alertModel: alertModel)
     }
     
-    /*
-    func show(quiz step: QuizStepViewModel) {
-        imageView.image = step.image
-        textLabel.text = step.question
-        counterLabel.text = step.questionNumber
-    }
- */
-    
-    // приватный метод вывода на экран вопроса, который принимает на вход вью модель вопроса и ничего не возвращает
     func show(quiz result: QuizResultsViewModel) {
         let alertModel = AlertModel(
             title: result.title,
@@ -127,32 +94,6 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         alertPresenter?.show(alertModel: alertModel)
     }
    
-    
-    // приватный метод, который меняет цвет рамки
-    // принимает на вход булевое значение и ничего не возвращает
-    /*
-    func showAnswerResult(isCorrect: Bool) {
-        imageView.layer.masksToBounds = true // 1
-        imageView.layer.borderWidth = 8 // 2
-        imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor // 3
-        if isCorrect {
-            correctAnswers += 1
-        }
-      
-        changeStateButtons(isEnabled: false)
-        // запускаем задачу через 1 секунду c помощью диспетчера задач
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let self = self else { return }
-            self.presenter.correctAnswers = self.correctAnswers
-            self.presenter.questionFactory = self.questionFactory
-            self.presenter.showNextQuestionOrResults()
-        }
-    }
-    */
-
-
-    
-    // функция которая делает рамку прозрачной
     private func borderColorClear() {
         imageView.layer.borderColor = UIColor.clear.cgColor
     }

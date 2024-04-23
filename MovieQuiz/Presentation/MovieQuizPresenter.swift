@@ -47,7 +47,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         QuizStepViewModel(
             image: UIImage(data: model.image) ?? UIImage(),
             question: model.text,
-            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)" // ОШИБКА: `currentQuestionIndex` и `questionsAmount` неопределены
+            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)"
         )
     }
     
@@ -83,7 +83,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         currentQuestion = question
         
         let viewModel = convert(model: question)
-        //let viewModel = convert(model: question)
         DispatchQueue.main.async { [weak self] in
             self?.viewController?.renderView(quiz: viewModel)
         }
@@ -98,23 +97,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         viewController?.showNetworkError(message: error.localizedDescription)
     }
     
-    //
-    /*
-    func showNextQuestionOrResults() {
-            if self.isLastQuestion() {
-                let text = "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
-                
-                let viewModel = QuizResultsViewModel(
-                    title: "Этот раунд окончен!",
-                    text: text,
-                    buttonText: "Сыграть еще раз")
-                    viewController?.show(quiz: viewModel)
-            } else {
-                self.switchToNextQuestion()
-                questionFactory?.requestNextQuestion()
-            }
-        }
-    */
     private func showNextQuestionOrResults() {
         viewController?.buttonsState(enabled: true)
         
