@@ -39,25 +39,32 @@ class QuestionFactory: QuestionFactoryProtocol {
         }
     }
     
-    func requestNextQuestion() {
+    func requestNextQuestion(index: Int) {
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
-            let index = (0..<self.movies.count).randomElement() ?? 0
-            
             guard let movie = self.movies[safe: index] else { return }
             
             var imageData = Data()
            
-            do {
+           do {
                 imageData = try Data(contentsOf: movie.resizedImageURL)
             } catch {
                 print("Failed to load image")
-            } 
+            }
             
             let rating = Float(movie.rating) ?? 0
+            let ratingQuestion = round(Float.random(in: 7.3 ... 9.5) * 10) / 10
+            let text: String
+            let correctAnswer: Bool
+            let quest = Int.random(in: 0...20)
+            if quest % 2 == 0 {
+                text = "Рейтинг этого фильма больше чем \(ratingQuestion)?"
+                correctAnswer = rating > ratingQuestion
+            } else {
+                text = "Рейтинг этого фильма меньше чем \(ratingQuestion)?"
+                correctAnswer = rating < ratingQuestion
+            }
             
-            let text = "Рейтинг этого фильма больше чем 7?"
-            let correctAnswer = rating > 7
             
             let question = QuizQuestion(image: imageData,
                                          text: text,
